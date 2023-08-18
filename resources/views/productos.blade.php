@@ -20,6 +20,25 @@ Use App\Models\Receta;
 			}
 		 ?> 
 @endif
+<div class="loader">    
+	
+</div>
+
+<style>
+  .loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('img/loading.gif') 50% 50% no-repeat rgb(0, 0, 0);      
+}
+</style>
+
+<script type="text/javascript">
+$(".loader").delay(800).fadeOut(1500);
+</script>
 <style>
 .swiper-container{width: 100%; height: 100%;}
     .swiper-slide {
@@ -78,22 +97,22 @@ Use App\Models\Receta;
 
         </div>--}}
         @foreach($productos as $product)
-        <div class="col-md-3 mt-2">
+        <div class="col-md-3 col-6 mt-2" style="margin-right: -10px;">
           
             <div class="card swiper-overflow-container">                            
               <div class="swiper-container s2">                
                   <div class="swiper-wrapper">
                       @if($product->img1)
-                      <div class="swiper-slide"><img style="width:100%; height: 30vh" src="/img-products/{{$product->img1}}"></div>
+                      <div class="swiper-slide"><img style="width:100%; height: 45vh" src="/img-products/{{$product->img1}}"></div>
                       @endif
                       @if($product->img2)
-                      <div class="swiper-slide"><img style="width:100%; height: 30vh" src="/img-products/{{$product->img2}}"></div>	
+                      <div class="swiper-slide"><img style="width:100%; height: 45vh" src="/img-products/{{$product->img2}}"></div>	
                       @endif
                       @if($product->img3)
-                      <div class="swiper-slide"><img style="width:100%; height: 30vh" src="/img-products/{{$product->img3}}"></div>									
+                      <div class="swiper-slide"><img style="width:100%; height: 45vh" src="/img-products/{{$product->img3}}"></div>									
                       @endif
                       @if($product->img4)
-                      <div class="swiper-slide"><img style="width:100%; height: 30vh" src="/img-products/{{$product->img4}}"></div>										
+                      <div class="swiper-slide"><img style="width:100%; height: 45vh" src="/img-products/{{$product->img4}}"></div>										
                       @endif
                       
                   </div>
@@ -102,7 +121,7 @@ Use App\Models\Receta;
                 </div>  					
               <div class="card-body text-center">		
                 		
-              <p class="text-product-title"><a style="color: #676767;" @isset($receta) href="/producto?product_id={{$product->id}}&receta_id={{$receta->id}}" @else href="/producto?product_id={{$product->id}}"  @endisset >{{$product->nombre}}</a> @if($product->descuento_porcentaje != 0)<small class="badge badge-dark badge-sm">{{$product->descuento_porcentaje}}% OFF</small> @endif</p>
+              <p class="text-product-title"><a style="color: #676767;font-size: 15px;" @isset($receta) href="/producto?product_id={{$product->id}}&receta_id={{$receta->id}}" @else href="/producto?product_id={{$product->id}}"  @endisset >{{$product->nombre}}</a> @if($product->descuento_porcentaje != 0)<small class="badge badge-dark badge-sm" style="font-size: 11px;">{{$product->descuento_porcentaje}}% OFF</small> @endif</p>
               <p class="text-product-price">
               
               @if($product->descuento_porcentaje != 0)					

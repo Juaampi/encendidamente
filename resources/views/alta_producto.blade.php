@@ -287,7 +287,7 @@
 			  <div class="form-group row">
 				<label for="description" class="col-md-4 col-form-label text-md-right">Descripción</label>
 				<div class="col-md-6">
-				  <textarea type="text" class="form-control" name="description"></textarea>
+				  <textarea type="text" class="form-control" name="descripcion"></textarea>
 				</div>
 			  </div>
 

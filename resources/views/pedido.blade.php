@@ -24,13 +24,12 @@ Use App\Carrito;
         <nav aria-label="breadcrumb" class="mt-3 mb-3" style="font-size: 13px;">
             <ol class="breadcrumb" style="padding: 10px;">
               <li class="breadcrumb-item" style="font-weight: bold;"><a href="#">Carrito</a></li>
-              <li class="breadcrumb-item" ><a href="#">Detalles de Pago</a></li>
-              <li class="breadcrumb-item">Pendiente de pago <i style="margin-top: 4px;margin-left: 5px;color: #7d7d7d;" class="fa fa-check-circle"></i></li>
+              <li class="breadcrumb-item" ><a href="#">Detalles de Pago</a></li>              
             </ol>
           </nav>
           <div class="row">
               <div class="col-md-8">
-                    <h3 class="badge badge-secondary badge-m">Armazones</h3>
+                    <h3 class="badge badge-secondary badge-m">Productos en el carrito</h3>
                     <table class="table">                      
                         <thead>
                             <th>Producto</th>
@@ -40,14 +39,11 @@ Use App\Carrito;
                         </thead>
                         <tbody>     
                             <?php $total = 0; ?>                       
-                            @foreach(array_unique($carrito->products) as $product)
-                                @if($product->tipo_producto == 'Armazon')
+                            @foreach(array_unique($carrito->products) as $product)                                
                                     <tr>
                                     <td>
                                         <div class="row">
-                                        <div class="col-2">
-                                            <img height="30px" style="border-radius: 5px;" src="img-products/{{$product->img1}}">
-                                        </div>
+                                        
                                         <div class="col-10">
                                         <h6 class="text-product-title" style="color: rgb(73, 73, 73);font-size: 16px;">{{$product->nombre}}</h5>                                                           
                                         </div>
@@ -92,127 +88,11 @@ Use App\Carrito;
                                         @endif
                                     </td>
                                     </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-
-                    
-                    <table class="table ">    
-                        <h3 class="badge badge-secondary">Cristales</h3>                  
-                        <thead>
-                            <th>Producto</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                            <th>Subtotal</th>
-                        </thead>
-                        <tbody>       
-                            @if($carrito->cristales)                     
-                            @foreach(array_unique($carrito->cristales) as $cristal)
-                            <tr>
-                            <td>
-                                <div class="row">
-                                <div class="col-2">
-                                    <img height="30px" style="border-radius: 5px;" src="img/lente.webp">
-                                </div>
-                                <div class="col-10">
-                                <h6 class="text-product-title" style="color: rgb(73, 73, 73);font-size: 16px;">{{$cristal->tipo_cristal->nombre}}</h5>                                                           
-                                </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="text-product-price" style="font-size: 17px;">${{$cristal->tipo_cristal->monto * $cristal->tipo_cambio->valor}}</span>
-                            </td>
-                            <td>             
-                                <?php $count = 0; ?>                  
-                                @foreach ($carrito->cristales as $cristal1)
-                                    @if($cristal->tipo_cristal->nombre == $cristal1->tipo_cristal->nombre )
-                                        <?php $count++; ?>                  
-                                    @endif
-                                @endforeach
-                                <div class="row">                                                                                
-                                    <p class="text-product-price" style="font-size: 17px;">x{{$count}}</p>                                             
-                                </div>                        
-                            </td>
-                            <td>                           
-                                <?php $total = $cristal->tipo_cristal->monto * $count;  ?>
-                                <span class="text-product-price" style="font-size: 17px;">${{$total * $cristal->tipo_cambio->valor}}</span>
                                 
-                            </td>
-                            </tr>
-                            @endforeach
-                            @endif
-                        </tbody>
-                    </table>
-
-
-                    <h3 class="badge badge-secondary badge-m">Accesorios</h3>
-                    <table class="table">                      
-                        <thead>
-                            <th>Producto</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                            <th>Subtotal</th>
-                        </thead>
-                        <tbody>     
-                            <?php $total = 0; ?>                       
-                            @foreach(array_unique($carrito->products) as $product)
-                                @if($product->tipo_producto == 'Accesorio')
-                                    <tr>
-                                    <td>
-                                        <div class="row">
-                                        <div class="col-2">
-                                            <img height="30px" style="border-radius: 5px;" src="img-products/{{$product->img1}}">
-                                        </div>
-                                        <div class="col-10">
-                                        <h6 class="text-product-title" style="color: rgb(73, 73, 73);font-size: 16px;">{{$product->nombre}}</h5>                                                           
-                                        </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @if($product->descuento_porcentaje != 0)					
-                                        <?php $porcentaje = 0; $price = 0;
-                                        $porcentaje = $product->monto*$product->descuento_porcentaje; 
-                                        $porcentaje = $porcentaje / 100;
-                                        $price = $product->monto - $porcentaje; 											
-                                        ?>
-                                        <span style="color: #bebebe; font-size: 12px;"><s>${{$product->monto * $product->tipo_cambio->valor}}</s></span>                                
-                                        <span class="text-product-price" style="font-size: 16px;">${{$price * $product->tipo_cambio->valor}}<span>		
-                                        @else
-                                        <span class="text-product-price" style="font-size: 16px;">${{$product->monto * $product->tipo_cambio->valor}}</span>
-                                        @endif
-                                    </td>
-                                    <td>             
-                                        <?php $count = 0; ?>                  
-                                        @foreach ($carrito->products as $product1)
-                                            @if($product->nombre == $product1->nombre)
-                                                <?php $count++; ?>                  
-                                            @endif
-                                        @endforeach
-                                        <div class="row">                                                                                
-                                            <p class="text-product-price" style="font-size: 16px;">x{{$count}}</p>                                             
-                                        </div>                          
-                                    </td>
-                                    <td>
-                                        @if($product->descuento_porcentaje != 0)					
-                                                <?php $porcentaje = 0; $price = 0;
-                                                $porcentaje = $product->monto*$product->descuento_porcentaje; 
-                                                $porcentaje = $porcentaje / 100;
-                                                $price = $product->monto - $porcentaje; 
-                                                $total = $price * $count; 											
-                                                ?>                                                             
-                                        <span class="text-product-price" style="font-size: 16px;">${{$total * $product->tipo_cambio->valor}}<span>		
-                                        @else
-                                        <?php  $total = $product->monto * $count; ?>
-                                        <span class="text-product-price" style="font-size: 16px;">${{$total * $product->tipo_cambio->valor}}</span>
-                                        @endif
-                                    </td>
-                                    </tr>
-                                @endif
                             @endforeach
                         </tbody>
                     </table>
-
+                                     
                     <form id="saved-form" action="/detalles" method="POST"> 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">    
                         <p class="text-product-description" style="margin-left: 15px;margin-bottom: 10px;"  id="name">Por favor, completá todos los datos requeridos para un mejor envío.</p>                 
@@ -225,7 +105,7 @@ Use App\Carrito;
                             <div class="form-group" >						
                                 <label class="col-md-4 control-label">DNI<span style="color: red">*</span></label>
                                 <div class="col-md-12">
-                                    <input id="dni" type="text" class="form-control" name="dni" value="{{Auth::user()->usuario->dni}}" required>
+                                    <input id="dni" type="text" class="form-control" name="dni" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -364,29 +244,21 @@ Use App\Carrito;
     jQuery(document).ready(function(){
         const id = "<?php echo $carrito->receta_id ?>";
         $('#agregar').on('click', function(){ 
-            swal("¿Querés otro par de anteojos o algún accesorio ?", {
+            swal("¿Querés ver algún otro producto?", {
                 closeOnEsc: false,
               closeOnClickOutside: false,  
           buttons: {          
-            cancel: 'Nada más' , 
+            cancel: 'Nada más, gracias' , 
             catch: {
-              text: "Ver anteojos",
+              text: "Ver más productos por favor",
               value: "catch",
-            }, 
-            clipOn: {          
-            text: "Ver accesorios",
-              value: "clipOn",
-          }
+            },             
         }})        
         .then((value) => {
           switch (value) {
-        
-            case "clipOn":
-              window.location.href = "https://web.visionyestilo.com.ar/accesorios?receta_id="+id;
-              break;
-        
+                
             case "catch":
-              window.location.href = "https://web.visionyestilo.com.ar/verproductorecetado?receta_id="+id;
+              window.location.href = "https://localhost:8000/productos";
               break;                 
           }
         });
@@ -475,29 +347,21 @@ Use App\Carrito;
         
         const id = "<?php echo $carrito->receta_id ?>";
 
-          swal("¿Querés otro par de anteojos o algún accesorio ?", {
+          swal("¿Querés otro ver algún otro producto?", {
             closeOnEsc: false,
               closeOnClickOutside: false,  
           buttons: {          
-            cancel: 'Nada más' , 
+            cancel: 'Nada más, gracias' , 
             catch: {
-              text: "Ver anteojos",
+              text: "Ver más productos por favor",
               value: "catch",
-            }, 
-            clipOn: {          
-            text: "Ver accesorios",
-              value: "clipOn",
-          }
+            },         
         }})        
         .then((value) => {
-          switch (value) {
-        
-            case "clipOn":
-              window.location.href = "https://web.visionyestilo.com.ar/accesorios?receta_id="+id;
-              break;
+          switch (value) {        
         
             case "catch":
-              window.location.href = "https://web.visionyestilo.com.ar/verproductorecetado?receta_id="+id;
+              window.location.href = "https://localhost:8000/productos";
               break;                 
           }
         });

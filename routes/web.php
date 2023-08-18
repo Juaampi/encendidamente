@@ -15,10 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', 'App\Http\Controllers\ProductoController@index');
 // <!-- Productos (Lentes) -->
+Route::get('/productos', 'App\Http\Controllers\ProductoController@search'); 
+Route::get('/producto', 'App\Http\Controllers\ProductoController@product'); 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/auth', 'App\Http\Controllers\Auth\AuthenticatedSessionController@redirectToProvider');
+Route::get('/callback', 'App\Http\Controllers\Auth\AuthenticatedSessionController@handleProviderCallback');
+
+Route::get('/dashboard', 'App\Http\Controllers\Auth\AuthenticatedSessionController@dashboard');
+
+Route::get('/pedido', 'App\Http\Controllers\ProductoController@pedido');
+Route::post('/detalles', 'App\Http\Controllers\ProductoController@detalles');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -26,17 +32,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    Route::get('/productos', 'App\Http\Controllers\ProductoController@search');    
-    Route::get('/producto', 'App\Http\Controllers\ProductoController@product'); 
+       
+
     Route::get('/cristal', 'App\Http\Controllers\CristalController@cristal')->name('cristal'); 
 
     Route::post('/alcarro', 'App\Http\Controllers\ProductoController@addtocart');
     Route::post('/alcarrocristal', 'App\Http\Controllers\CristalController@addtocart');
-
-    Route::get('/pedido', 'App\Http\Controllers\ProductoController@pedido');
-    Route::post('/detalles', 'App\Http\Controllers\ProductoController@detalles');
-
-
+  
     //Producto
     Route::get('/agregar', function () {  return view('agregarProductos');}); //colocarla dentro de la controladora
 

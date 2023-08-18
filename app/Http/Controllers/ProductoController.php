@@ -18,6 +18,8 @@ use App\Models\Orden;
 use App\Models\Receta;
 use App\Models\Producto_Orden;
 use App\Models\Cristal_Orden;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 
 class ProductoController extends Controller
@@ -53,9 +55,9 @@ class ProductoController extends Controller
 
 
 		$orden = new Orden; 
-		$orden->medico_id = $receta->medico_id;
-		$orden->paciente_id = $receta->paciente_id;
-		$orden->receta_id = $receta->id; 
+		$orden->medico_id = 1;
+		$orden->paciente_id = Auth::user()->usuario->id;
+		$orden->receta_id = 10; 
 		$orden->direccion = $request->direccion; 	
 		$orden->monto = $request->total; 
 		$orden->estado = "Pendiente";
@@ -68,20 +70,19 @@ class ProductoController extends Controller
 			$producto_orden->save();
 		}
 
-		foreach($carrito->cristales as $cristal){
+		/*foreach($carrito->cristales as $cristal){
 			$cristal_orden = new Cristal_Orden; 
 			$cristal_orden->cristal_id = $cristal->id; 
 			$cristal_orden->orden_id = $orden->id; 
 			$cristal_orden->save();
-		}			
+		}	*/		
 		
 		return view('detalles', ['orden' => $orden]);						
 	}
 
 	public function addtocart(Request $request)
 	{
-		$product = Producto::find($request['product_id']);	
-		$receta = Receta::find($request->receta_id);
+		$product = Producto::find($request['product_id']);		
 		$carrito = new Carrito;		
 
 		if(session()->has('carrito')){
@@ -91,94 +92,10 @@ class ProductoController extends Controller
 			$arrayProducts = [];	
 
 		array_push($arrayProducts, $product);		
-		$carrito->products = $arrayProducts;
-		$carrito->receta_id = $receta->id;
+		$carrito->products = $arrayProducts;		
 		session()->put('carrito', $carrito);		
 
-		if($product->tipo_producto == 'Accesorio'){
-			return view('pedido');
-		}
-					
-
-		if($receta->distancia_apto_id == 2 || $product->distancia_apto_id == 2 || $product->distancia_apto_id == 4){	
-
-			if($request->tipo_lente){
-				if($request->tipo_lente == 'desol'){
-					return view('pedido');
-				}
-			}		
-			
-			if($request->degresivos == "si"){			
-				if($receta->cerca){
-					
-					$cristales = Tipo_Cristal::where('esfera_desde', '<=', $receta->cerca->esferaOD)->where('esfera_hasta', '>=', $receta->cerca->esferaOD)
-											->where('cilindro_desde', '<=', $receta->cerca->cilindroOD)->where('cilindro_hasta', '>=', $receta->cerca->cilindroOD)
-											->where('eje_desde', '<=', $receta->cerca->ejeOD)->where('eje_hasta', '>=', $receta->cerca->ejeOD)
-											->where('tipo', 'degresivo')
-											->where('categoria_id', 1)
-											->get();
-
-					return view('cristales', ['productos' => $cristales]);
-		
-				}
-			}else{
-				if($receta->cerca){
-					$cristales = Tipo_Cristal::where('esfera_desde', '<=', $receta->cerca->esferaOD)->where('esfera_hasta', '>=', $receta->cerca->esferaOD)
-												->where('cilindro_desde', '<=', $receta->cerca->cilindroOD)->where('cilindro_hasta', '>=', $receta->cerca->cilindroOD)
-												->where('eje_desde', '<=', $receta->cerca->ejeOD)->where('eje_hasta', '>=', $receta->cerca->ejeOD)
-												->where('tipo', 'monofocal')
-												->where('categoria_id', 1)
-												->get();
-
-						return view('cristales', ['productos' => $cristales]);
-				}
-			}														
-		}
-
-		if($receta->distancia_apto_id == 1 || $product->distancia_apto_id == 1 || $product->distancia_apto_id == 4){
-			if($request->tipo_lente){ 
-				if($request->tipo_lente == 'desol'){
-					if($receta->lejos){		
-
-						$cristales = Tipo_Cristal::where('esfera_desde', '<=', $receta->cerca->esferaOD)->where('esfera_hasta', '>=', $receta->cerca->esferaOD)
-														->where('cilindro_desde', '<=', $receta->cerca->cilindroOD)->where('cilindro_hasta', '>=', $receta->cerca->cilindroOD)
-														->where('eje_desde', '<=', $receta->cerca->ejeOD)->where('eje_hasta', '>=', $receta->cerca->ejeOD)
-														->where('tipo', 'monofocal')
-														->where('categoria_id', 2)
-														->get();
-						
-						return view('cristales', ['productos' => $cristales]);		
-					}
-				}
-			}
-
-			if($request->tipo_lente == 'clipOn'){
-				if($receta->lejos){		
-
-					$cristales = Tipo_Cristal::where('esfera_desde', '<=', $receta->cerca->esferaOD)->where('esfera_hasta', '>=', $receta->cerca->esferaOD)
-													->where('cilindro_desde', '<=', $receta->cerca->cilindroOD)->where('cilindro_hasta', '>=', $receta->cerca->cilindroOD)
-													->where('eje_desde', '<=', $receta->cerca->ejeOD)->where('eje_hasta', '>=', $receta->cerca->ejeOD)
-													->where('tipo', 'monofocal')
-													->where('categoria_id', 3)
-													->get();
-					
-					return view('cristales', ['productos' => $cristales]);		
-				}
-			}
-
-			if($receta->lejos){		
-
-				$cristales = Tipo_Cristal::where('esfera_desde', '<=', $receta->cerca->esferaOD)->where('esfera_hasta', '>=', $receta->cerca->esferaOD)
-												->where('cilindro_desde', '<=', $receta->cerca->cilindroOD)->where('cilindro_hasta', '>=', $receta->cerca->cilindroOD)
-												->where('eje_desde', '<=', $receta->cerca->ejeOD)->where('eje_hasta', '>=', $receta->cerca->ejeOD)
-												->where('tipo', 'monofocal')
-												->where('categoria_id', '=', 1)
-												->get();
-				
-				return view('cristales', ['productos' => $cristales]);		
-			}
-			
-		}
+		return redirect()->back()->with('alert-success-add', 'true');
 	}
 
 		
@@ -392,7 +309,10 @@ class ProductoController extends Controller
     {
         $producto = Producto::find($request->id);
 		$tipos_cambio = Tipo_Cambio::all();        
-        return view('editar_producto', ['tipos_cambio' => $tipos_cambio, 'producto' => $producto]);         
+		$colores = Color::all();
+		$marcas = Marca::all(); 
+		$materiales = Material::all();
+        return view('editar_producto', ['tipos_cambio' => $tipos_cambio, 'producto' => $producto, 'colores' => $colores, 'marcas' => $marcas, 'materiales' => $materiales]);         
     }
 
     public function eliminar_producto(Request $request)
