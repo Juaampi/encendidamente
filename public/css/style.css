@@ -23,10 +23,11 @@
     .swiper-overflow-container {      overflow-x: hidden; /* prevent horizontal scroll */    }
     .swiper-overflow-container .container {  overflow: visible; /* if your container has overflow by default */  }  
     .swiper-overflow-container .swiper-container { overflow: visible; /* remove swiper container overflow */  }
-    .img-header{height: 80vh;}
-    .header-encendida{font-size: 35px; font-family: 'Rufina', serif;}
-    
-   
+    .img-header{height: 100vh;}
+    .header-encendida{font-size: 25px; font-family: 'Kanit', sans-serif;font-weight: 300;}
+    .navbar-styles{position: fixed !important; z-index: 999 ;background:rgb(0 0 0 / 15%); top: 0px}
+    .cards-products{}
+   .bread{margin-top: 15vh}
       .pendiente{
         left: -7%;
     }
@@ -85,6 +86,7 @@
     .swiper-overflow-container {      overflow-x: hidden; /* prevent horizontal scroll */    }
     .swiper-overflow-container .container {  overflow: visible; /* if your container has overflow by default */  }  
     .swiper-overflow-container .swiper-container { overflow: visible; /* remove swiper container overflow */  }
+    .bread{margin-top: 1vh}
       .pendiente{
           left: -3%;
       }
@@ -117,4 +119,5 @@
       }      
       .img-header{height: 100vh;}
       .header-encendida{font-size: 80px; font-family: 'Rufina', serif;}
+      .navbar-styles{background:black !important; color: white !important;top: 0px}
 }

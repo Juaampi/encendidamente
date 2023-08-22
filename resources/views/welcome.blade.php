@@ -57,13 +57,11 @@ $(".loader").delay(200).fadeOut(1500);
 }
 .centrado{
     position: absolute;
-    top: 20%;
+    top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
 	font-family: 'Amatic SC', cursive;
 	color: white; 
-	font-size: 50px;
-	text-shadow: 2px 2px 2px black;
 	width: 100%;
 }
 
@@ -91,25 +89,17 @@ $(".loader").delay(200).fadeOut(1500);
 }
 
 
-.ml2 .letter {
-  display: inline-block;
-  line-height: 1em;
-}
-
-.ml3 .letter {
-  display: inline-block;
-  line-height: 1em;
-  color:#e56396;
-}
-
-
   </style>
 
 		<div class="contenedor">
-			<img src="img/header.jpg" class="img-header" style="width:100%">
+			<div class="img-header no-responsive" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/slider2.jpg');"></div>	
+			<div class="img-header responsive" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/header.jpg');"></div>			
 			<div   class="centrado">				
 					  <p>
-						<span class="ml2 header-encendida" >ENCENDIDA</span><span class="ml3 header-encendida" >MENTE</span>
+						<span class="header-encendida" >Desarrollamos <span style="color:#e56396">velas</span> de soja, <span style="color:#e56396">100%</span> naturales y ecológicas</span>
+					</p>
+					<p>
+						
 					</p>				  				
 			</div>
 		  </div>
@@ -120,6 +110,27 @@ $(".loader").delay(200).fadeOut(1500);
 	<script>
 
 // Wrap every letter in a span
+
+var textWrapper2 = document.querySelector('.ml3');
+textWrapper2.innerHTML = textWrapper2.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+anime.timeline({loop: true})
+  .add({
+    targets: '.ml3 .letter',
+    scale: [4,1],
+    opacity: [0,1],
+    translateZ: 0,
+    easing: "easeOutExpo",
+    duration: 1500,
+    delay: (el, i) => 70*i
+  }).add({
+    targets: '.ml3',
+    opacity: 0,
+    duration: 2000,
+    easing: "easeOutExpo",
+    delay: 2000
+  });
+
 var textWrapper = document.querySelector('.ml2');
 textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
@@ -140,25 +151,7 @@ anime.timeline({loop: true})
     delay: 2000
   });
 
-  var textWrapper2 = document.querySelector('.ml3');
-textWrapper2.innerHTML = textWrapper2.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
-
-anime.timeline({loop: true})
-  .add({
-    targets: '.ml3 .letter',
-    scale: [4,1],
-    opacity: [0,1],
-    translateZ: 0,
-    easing: "easeOutExpo",
-    duration: 1500,
-    delay: (el, i) => 70*i
-  }).add({
-    targets: '.ml3',
-    opacity: 0,
-    duration: 2000,
-    easing: "easeOutExpo",
-    delay: 2000
-  });
+  
 	</script>
 
      

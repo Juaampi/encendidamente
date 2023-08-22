@@ -28,7 +28,8 @@ class RecetaController extends Controller
 
     public function anular(){
         session()->forget('carrito');
-        return view('dashboard');
+        $productos = Producto::all();
+        return view('welcome', ['productos' => $productos]);
     }
 
     public function obtener_paciente(Request $request)

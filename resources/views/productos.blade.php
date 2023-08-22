@@ -97,22 +97,22 @@ $(".loader").delay(800).fadeOut(1500);
 
         </div>--}}
         @foreach($productos as $product)
-        <div class="col-md-3 col-6 mt-2" style="margin-right: -10px;">
+        <div class="col-md-3 col-12 mt-2 cards-products" style="margin-right: -10px;">
           
             <div class="card swiper-overflow-container">                            
               <div class="swiper-container s2">                
                   <div class="swiper-wrapper">
                       @if($product->img1)
-                      <div class="swiper-slide"><img style="width:100%; height: 45vh" src="/img-products/{{$product->img1}}"></div>
+                      <div class="swiper-slide"><img style="width:100%; height: 70vh" src="/img-products/{{$product->img1}}"></div>
                       @endif
                       @if($product->img2)
-                      <div class="swiper-slide"><img style="width:100%; height: 45vh" src="/img-products/{{$product->img2}}"></div>	
+                      <div class="swiper-slide"><img style="width:100%; height: 70vh" src="/img-products/{{$product->img2}}"></div>	
                       @endif
                       @if($product->img3)
-                      <div class="swiper-slide"><img style="width:100%; height: 45vh" src="/img-products/{{$product->img3}}"></div>									
+                      <div class="swiper-slide"><img style="width:100%; height: 70vh" src="/img-products/{{$product->img3}}"></div>									
                       @endif
                       @if($product->img4)
-                      <div class="swiper-slide"><img style="width:100%; height: 45vh" src="/img-products/{{$product->img4}}"></div>										
+                      <div class="swiper-slide"><img style="width:100%; height: 70vh" src="/img-products/{{$product->img4}}"></div>										
                       @endif
                       
                   </div>

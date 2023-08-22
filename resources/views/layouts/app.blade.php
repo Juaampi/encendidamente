@@ -32,6 +32,8 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=WindSong&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&display=swap" rel="stylesheet">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js" integrity="sha512-/6TZODGjYL7M8qb7P6SflJB/nTGE79ed1RfJk3dfm/Ib6JwCT4+tOfrrseEHhxkIhwG8jCl+io6eaiWLS/UX1w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -47,6 +49,8 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 </head>
+
+
 <body style="background: #efe2e7">
 	@if(session()->has('carrito'))
 		<?php 
@@ -87,21 +91,28 @@
 
 	<?php //session()->forget('carrito'); ?>
 
+<style>
+	
+.navbar-dark .navbar-toggler-icon{
+    background-image: url('../img/hamburger.png');
+}
+
+</style>
 
 
 
 	<!-- <div class="top-info">ENVÍOS A TODO EL PAÍS <img class="icon-info" src="img/camion.png"></div>-->
-	<nav class="navbar navbar-expand-lg navbar-dark navbar-color" style="background:rgb(237 238 238 / 0%);">
+	<nav class="navbar navbar-expand-lg navbar-dark navbar-color navbar-styles">
 		
 		<div class="container">
-			<button class="navbar-toggler navbar-left" style="border:none;" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
+			<button id="nav-toggle-button" class="navbar-toggler navbar-left" style="border:none;" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span id="toggler" class="navbar-toggler-icon"></span>
 			  </button>
-		<a class="navbar-brand text-brand" href="/" style="margin-right: 30px">
-			<span style="font-family: 'Anton', sans-serif, cursive;text-align: center;font-size: 22px;color:black;">VELAS DE SOJA</span></a>
+		<a class="navbar-brand text-brand" href="/" style=" line-height: 16px;">
+			<span id="text-brand" style="font-family: 'Kanit', sans-serif;text-align: center;font-size: 18px;color:white;font-weight: 300">ENCENDIDA<br><span style="font-weight: 500">MENTE</span></span></a>
 			
 			<a @if(session()->has('carrito')) href="/pedido" @endif>
-			    <i style="font-size: 35px;color: black;margin-right: 15px;" class="fa fa-shopping-cart responsive" aria-hidden="true"><span class="badge badge-light" style="font-size: 10px;position: absolute;top: 5px;">@if(session()->has('carrito')) @if($carrito->cristales) {{count($carrito->products) + count($carrito->cristales)}} @else {{count($carrito->products)}} @endif @endif</span></i>		
+			    <i id="carrito-icon" style="font-size: 30px;color: white;margin-right: 15px;" class="fa fa-shopping-cart responsive" aria-hidden="true"><span class="badge badge-light" style="font-size: 10px;position: absolute;top: 17px;background: black; ">@if(session()->has('carrito')) @if($carrito->cristales) {{count($carrito->products) + count($carrito->cristales)}} @else {{count($carrito->products)}} @endif @endif</span></i>		
 			</a>
 		<div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
 		  <ul class="navbar-nav">
@@ -217,7 +228,29 @@
 	@endif
 
 
-
+	<script>
+		function changeCss () {
+	  var bodyElement = document.querySelector("body");
+	  var textBrand = document.getElementById("text-brand");
+	  var toggler = document.getElementById("toggler");
+	  var carrito = document.getElementById("carrito-icon");
+	  var navElement = document.querySelector("nav");
+	  //this.scrollY > 10 ?  navElement.style.background = "#ffffff9e" : navElement.style.background = "rgb(0 0 0 / 15%)";
+	  if(this.scrollY > 10){
+		navElement.style.background = "rgb(255 255 255 / 84%)";
+		textBrand.style.color= "black";
+		toggler.style.backgroundImage = "url('../img/hambur-black.png')";
+		carrito.style.color= "black";
+		
+	  }else{
+		navElement.style.background = "rgb(0 0 0 / 15%)";
+		textBrand.style.color= "white";
+		toggler.style.backgroundImage = "url('../img/hamburger.png')";
+		carrito.style.color= "white";
+	  }
+	}
+	window.addEventListener("scroll", changeCss , false);
+		</script>
 
 	<footer class="footer mt-5" style="background: #b9b2b2;">
 		<div class="container text-center" style="color: #4a4747;padding: 15px 15px 15px 0px;">								

@@ -37,7 +37,7 @@ $(".loader").delay(800).fadeOut(1500);
 
 
 <div class="container">
-    <nav aria-label="breadcrumb" class="mt-3 mb-3">
+    <nav aria-label="breadcrumb" class="mb-3 bread">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="#">Velas</a></li>
           <li class="breadcrumb-item"><a href="#">Aromáticas</a></li>
